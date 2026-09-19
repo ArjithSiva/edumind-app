@@ -1,0 +1,26 @@
+# Render Blueprint — deploys the EduMind API.
+# Either use this file (New > Blueprint) or configure manually, see README step 4.
+services:
+  - type: web
+    name: edumind-api
+    runtime: node
+    plan: free
+    rootDir: server
+    buildCommand: npm install
+    startCommand: npm start
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: MONGO_URI
+        sync: false      # set in the Render dashboard
+      - key: JWT_SECRET
+        generateValue: true
+      - key: CLIENT_URL
+        sync: false      # your Vercel URL
+      - key: AI_PROVIDER
+        value: groq
+      - key: GROQ_API_KEY
+        sync: false
+      - key: GROQ_MODEL
+        value: qwen/qwen3.6-27b
