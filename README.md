@@ -195,26 +195,6 @@ CLIENT_URL=http://localhost:5173,https://edumind-ai.vercel.app
 
 ---
 
-## Step 9 — Moving to EnterPro (required for submission)
-
-Vercel and Render above are your working reference deployment — build and test there first, since you know exactly how they behave. For the actual hackathon submission, the track requires the whole app running on **EnterPro**.
-
-**I couldn't find any public documentation for EnterPro** — no API reference, no product page indexed anywhere. Every other project I found from what looks like this same hackathon (same "EnterPro for enterprise workflows, orchestration, and application deployment" + "Qwen" pairing) hit the same wall and noted that EnterPro is provisioned directly by the organizers, credentials and docs via the event portal — not a public product you can look up independently.
-
-You've said EnterPro can import straight from GitHub, the same way Render and Vercel do. That's good news: it means this repo doesn't need restructuring, because it's already organized the way every GitHub-import platform expects —
-
-- **Backend**: root directory `server`, build `npm install`, start `npm start`, health check `/api/health` — exactly the values you already used for Render
-- **Frontend**: root directory `client`, build `npm run build`, output directory `dist` — exactly what you used for Vercel
-- **Environment variables**: the same list from `server/.env.example`
-
-If EnterPro's importer asks for the same fields Render or Vercel asked for, reuse those exact values. If it instead asks for a Dockerfile — common on enterprise/container-based platforms — one is included at `server/Dockerfile` and `client/Dockerfile` as a hedge; I wrote them to standard patterns but couldn't test-build them in this environment (no Docker available here), so sanity-check the first build log.
-
-**When you get to the actual EnterPro import screen, send me a screenshot of it** — the same way you did for the Render environment variables. That's the fastest way for me to tell you exactly which field maps to what, instead of both of us guessing at an undocumented platform. Specifically useful to know:
-- Does it ask for one repo import per service (like Render/Vercel), or one combined deploy?
-- Does it want a Dockerfile, or does it auto-detect Node/Vite?
-- Where do environment variables get set, and is `MONGO_URI` reachable from EnterPro's network (some platforms need your Atlas IP allowlist to include their egress range, not just `0.0.0.0/0`)?
-
----
 
 ## Verifying it worked
 
